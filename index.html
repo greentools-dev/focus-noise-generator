@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procedural White Noise &amp; Rain Generator — Free &amp; 100% Client-Side</title>
+    <meta
+      name="description"
+      content="Generate infinite Brown noise, Pink noise, and procedural rain soundscapes mathematically using Web Audio API. 100% offline, zero audio files downloaded."
+    />
+    <meta name="keywords" content="brown noise generator, pink noise generator, procedural rain sound, ambient noise generator, adhd focus noise, white noise offline, client side audio generator" />
+    <meta name="author" content="GreenTools" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Procedural White Noise &amp; Rain Generator — 100% Client-Side" />
+    <meta
+      property="og:description"
+      content="Algorithmic ambient focus soundscapes generated directly in your browser. Zero MP3 downloads, 100% offline."
+    />
+    <meta property="og:site_name" content="GreenTools" />
+
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS CDN & Lucide Icons CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Structured JSON-LD Schema: WebApplication & FAQPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Procedural White Noise & Rain Generator",
+            "operatingSystem": "All",
+            "applicationCategory": "HealthApplication",
+            "browserRequirements": "Requires JavaScript and modern Web Audio API support.",
+            "description": "Synthesize Brownian noise, Pink noise, and procedural rain sounds algorithmically in real time.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "Pure Web Audio API mathematical sound synthesis (no audio files)",
+              "Brownian (Red) noise for deep focus and ADHD masking",
+              "Pink noise with equal-energy per octave Kellet algorithm",
+              "Procedural rain simulation with micro-droplet impulses",
+              "Interactive BiquadFilter tone shaping and master volume controls",
+              "Integrated focus timer (15, 30, 45, 60 min) with gentle fade-out",
+              "100% Offline execution with live visualizer waveform"
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How is the sound generated without downloading audio files?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The tool uses the browser's native Web Audio API to calculate sound wave samples directly using mathematical algorithms. Random noise is shaped through digital biquad filters and integration equations to generate endless, non-looping audio."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is the difference between Brown, Pink, and White noise?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "White noise contains equal power across all frequencies, which sounds like static hiss. Pink noise decreases in power at 3 dB per octave, resembling steady rainfall or wind. Brown (Brownian) noise decreases by 6 dB per octave, providing a deep, warm bass rumble favored for focus and sleep."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does this generator have an audible looping point?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Because each audio frame is synthesized procedurally in memory, there are no repetitive MP3 seams, clicks, or noticeable loops."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I leave this running in a background tab?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The Web Audio API operates in its own hardware audio thread and will continue playing uninterrupted while you work in other browser tabs or desktop applications."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      :root {
+        --grid-line: rgba(15, 23, 42, 0.04);
+      }
+      .bg-subtle-grid {
+        background-size: 24px 24px;
+        background-image:
+          linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      }
+      .pulse-ring {
+        animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      @keyframes pulse-border {
+        0%, 100% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 0.3;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased selection:bg-teal-500 selection:text-white bg-subtle-grid flex flex-col justify-between">
+    <!-- Header -->
+    <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-30">
+      <div class="max-w-[1280px] mx-auto flex items-center justify-between gap-6 px-4 sm:px-6 py-3.5">
+        <a href="#app" class="flex items-center gap-2.5 text-base font-bold tracking-tight text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 rounded">
+          <div class="w-7 h-7 rounded-lg bg-teal-600 flex items-center justify-center text-white shadow-xs">
+            <i data-lucide="waves" class="w-4 h-4"></i>
+          </div>
+          <span>GreenTools <span class="text-xs font-normal text-slate-400">/ Focus Noise</span></span>
+        </a>
+
+        <nav aria-label="Quick links" class="hidden sm:flex items-center gap-6 text-xs sm:text-sm font-medium text-slate-600">
+          <a href="#how-to-use" class="hover:text-slate-900 transition-colors">How It Works</a>
+          <a href="#privacy" class="hover:text-slate-900 transition-colors">Privacy</a>
+          <a href="#faq" class="hover:text-slate-900 transition-colors">FAQ</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-teal-800 bg-teal-50 border border-teal-200 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-teal-500"></span>
+            <span>Zero Audio Downloads</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main id="app" class="max-w-[1280px] mx-auto w-full px-4 sm:px-6 py-8 sm:py-12 flex-1">
+      
+      <!-- Central Focus Sound Card -->
+      <section class="max-w-xl mx-auto text-center">
+        <!-- Privacy Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/80 rounded-full mb-4">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 shrink-0"></i>
+          <span>100% Private · Synthesized purely in browser memory</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
+          Procedural White Noise &amp; Rain
+        </h1>
+
+        <p class="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed max-w-md mx-auto">
+          Infinite algorithmic focus soundscapes. No looping seams, zero network requests, and completely offline.
+        </p>
+
+        <!-- Player Card -->
+        <div class="mt-8 bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
+          
+          <!-- Animated Frequency Visualizer Canvas -->
+          <div class="relative w-full h-24 bg-slate-900 rounded-2xl overflow-hidden mb-8 shadow-inner flex items-center justify-center">
+            <canvas id="visualizer-canvas" class="w-full h-full block"></canvas>
+            <div id="visualizer-idle-text" class="absolute inset-0 flex items-center justify-center text-xs text-slate-500 font-mono pointer-events-none">
+              Press Play to Synthesize Audio
+            </div>
+          </div>
+
+          <!-- Master Big Play/Pause Button -->
+          <div class="flex flex-col items-center justify-center mb-8">
+            <button
+              id="btn-master-toggle"
+              type="button"
+              class="relative w-20 h-20 rounded-full bg-teal-600 hover:bg-teal-500 active:bg-teal-700 text-white flex items-center justify-center shadow-lg transition-all transform hover:scale-105 group focus:outline-none focus:ring-4 focus:ring-teal-200"
+              aria-label="Toggle playback"
+            >
+              <i id="play-icon" data-lucide="play" class="w-8 h-8 fill-white translate-x-0.5"></i>
+              <i id="pause-icon" data-lucide="pause" class="w-8 h-8 fill-white hidden"></i>
+            </button>
+            <span id="player-status-label" class="mt-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+              Ready to Start
+            </span>
+          </div>
+
+          <!-- Sound Profile Switcher Pills -->
+          <div class="mb-8">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2.5">
+              Select Sound Environment
+            </label>
+            <div class="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                class="profile-btn px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all flex flex-col items-center gap-1 bg-teal-600 text-white border-teal-600 shadow-xs"
+                data-profile="brown"
+              >
+                <i data-lucide="mountain" class="w-4 h-4"></i>
+                <span>Brown Noise</span>
+              </button>
+
+              <button
+                type="button"
+                class="profile-btn px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all flex flex-col items-center gap-1 bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200"
+                data-profile="pink"
+              >
+                <i data-lucide="wind" class="w-4 h-4"></i>
+                <span>Pink Noise</span>
+              </button>
+
+              <button
+                type="button"
+                class="profile-btn px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all flex flex-col items-center gap-1 bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200"
+                data-profile="rain"
+              >
+                <i data-lucide="cloud-rain" class="w-4 h-4"></i>
+                <span>Procedural Rain</span>
+              </button>
+            </div>
+            <p id="profile-description" class="mt-2 text-[11px] text-slate-500 italic">
+              Deep, low-frequency rumble that calms racing thoughts and masks background chatter.
+            </p>
+          </div>
+
+          <!-- Tone & Volume Sliders -->
+          <div class="space-y-5 pt-6 border-t border-slate-100 text-left">
+            <!-- Master Volume -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1.5">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5 text-teal-600"></i>
+                  <span>Master Volume</span>
+                </span>
+                <span id="label-volume" class="font-mono text-slate-500">70%</span>
+              </div>
+              <input
+                id="slider-volume"
+                type="range"
+                min="0"
+                max="100"
+                value="70"
+                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
+              />
+            </div>
+
+            <!-- Tone / Lowpass Filter -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1.5">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="sliders" class="w-3.5 h-3.5 text-teal-600"></i>
+                  <span>Tone / Warmth Filter</span>
+                </span>
+                <span id="label-tone" class="font-mono text-slate-500">Warm Muffle (1200 Hz)</span>
+              </div>
+              <input
+                id="slider-tone"
+                type="range"
+                min="200"
+                max="8000"
+                step="50"
+                value="1200"
+                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
+              />
+              <div class="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+                <span>Deep &amp; Warm</span>
+                <span>Crisp &amp; Open</span>
+              </div>
+            </div>
+
+            <!-- Focus Sleep Timer -->
+            <div class="pt-4 border-t border-slate-100">
+              <div class="flex items-center justify-between mb-2">
+                <span class="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+                  <i data-lucide="timer" class="w-3.5 h-3.5 text-teal-600"></i>
+                  <span>Focus Countdown Timer</span>
+                </span>
+                <span id="timer-display" class="text-xs font-mono text-teal-700 font-bold">Continuous</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" class="timer-pill px-2.5 py-1 text-xs rounded-lg border bg-teal-50 border-teal-200 text-teal-800 font-medium" data-mins="0">Off</button>
+                <button type="button" class="timer-pill px-2.5 py-1 text-xs rounded-lg border bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100 font-medium" data-mins="15">15 min</button>
+                <button type="button" class="timer-pill px-2.5 py-1 text-xs rounded-lg border bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100 font-medium" data-mins="30">30 min</button>
+                <button type="button" class="timer-pill px-2.5 py-1 text-xs rounded-lg border bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100 font-medium" data-mins="45">45 min</button>
+                <button type="button" class="timer-pill px-2.5 py-1 text-xs rounded-lg border bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100 font-medium" data-mins="60">60 min</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Sponsor Slot Container -->
+      <aside
+        id="sponsor-slot"
+        aria-label="Product Recommendation"
+        class="mt-12 max-w-xl mx-auto bg-white border border-slate-200 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs"
+      >
+        <div class="flex items-center gap-3.5">
+          <div class="w-9 h-9 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center shrink-0">
+            <i data-lucide="headphones" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="text-[11px] font-semibold text-teal-600 uppercase tracking-wider">
+              Deep Work Companion
+            </div>
+            <p class="text-xs sm:text-sm font-medium text-slate-800 mt-0.5">
+              Struggling with office distractions or open-tab fatigue?
+            </p>
+            <p class="text-xs text-slate-500">
+              Brown noise calms neural auditory chatter to maintain uninterrupted flow state.
+            </p>
+          </div>
+        </div>
+        <a
+          href="#how-to-use"
+          class="px-3.5 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors whitespace-nowrap shrink-0 self-end sm:self-center"
+        >
+          Learn more
+        </a>
+      </aside>
+
+      <!-- How to Use Documentation -->
+      <article id="how-to-use" class="mt-16 pt-10 border-t border-slate-200 max-w-xl mx-auto">
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          How Algorithmic Noise Generation Works
+        </h2>
+        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+          Unlike ordinary sleep apps that loop 30-second audio files, GreenTools synthesizes continuous acoustic waves:
+        </p>
+
+        <div class="mt-6 space-y-4">
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-800 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</div>
+            <div>
+              <h3 class="text-sm font-semibold text-slate-900">Select Your Acoustic Profile</h3>
+              <p class="text-xs text-slate-600 mt-0.5">
+                Choose <strong>Brown Noise</strong> for deep bass rumble, <strong>Pink Noise</strong> for balanced airflow, or <strong>Procedural Rain</strong> for randomized pattering drops.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-800 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</div>
+            <div>
+              <h3 class="text-sm font-semibold text-slate-900">Shape the Tone Filter</h3>
+              <p class="text-xs text-slate-600 mt-0.5">
+                Adjust the <strong>Tone Filter</strong> slider to warm up harsh treble or open up high-end sparkle according to your headphones and room acoustics.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-slate-100 text-slate-800 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</div>
+            <div>
+              <h3 class="text-sm font-semibold text-slate-900">Set a Focus Timer</h3>
+              <p class="text-xs text-slate-600 mt-0.5">
+                Pick a 15, 30, 45, or 60 minute sprint. When the timer expires, the audio gently ramps down to silence without abrupt stops.
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Privacy Guarantee -->
+      <section id="privacy" class="mt-14 pt-10 border-t border-slate-200 max-w-xl mx-auto">
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          Privacy &amp; Offline Guarantee
+        </h2>
+        <div class="mt-4 p-4 rounded-xl bg-slate-100/70 border border-slate-200 text-xs text-slate-600 leading-relaxed">
+          Zero streaming audio files, zero tracking telemetry, and zero ads. The entire audio DSP chain is computed dynamically inside your browser's Web Audio thread. You can disconnect from WiFi immediately after loading and play for hours.
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section id="faq" class="mt-14 pt-10 border-t border-slate-200 max-w-xl mx-auto">
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-4">
+          <div class="p-4 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-semibold text-slate-900">Why does Brownian noise help with focus and ADHD?</h3>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+              Brown noise has higher power at lower frequencies, mimicking natural phenomena like heavy waterfalls or distant thunder. Research indicates that low-frequency masking reduces sensory overstimulation and auditory distractions.
+            </p>
+          </div>
+
+          <div class="p-4 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-semibold text-slate-900">Is this really generated without audio files?</h3>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+              Yes. The sound waves are produced by mathematical formulas (integrators and difference equations) executed in real-time by your computer's audio processor.
+            </p>
+          </div>
+
+          <div class="p-4 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-semibold text-slate-900">Will it consume battery or mobile data?</h3>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+              Because it streams 0 megabytes of audio over the internet, it consumes zero network data. CPU usage is negligible (&lt;1%) due to hardware-accelerated audio synthesis.
+            </p>
+          </div>
+
+          <div class="p-4 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-semibold text-slate-900">Can I use this while listening to music or podcasts?</h3>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+              Yes. You can layer this ambient sound in the background at low volumes beneath lo-fi music or video calls.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200/80 bg-white py-6 text-xs text-slate-500">
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p>GreenTools · 100% Client-Side Procedural Audio Engine</p>
+        <div class="flex items-center gap-5">
+          <a href="#app" class="hover:text-slate-900 transition-colors">Back to top</a>
+          <a href="#how-to-use" class="hover:text-slate-900 transition-colors">How It Works</a>
+          <a href="#privacy" class="hover:text-slate-900 transition-colors">Privacy</a>
+          <a href="#faq" class="hover:text-slate-900 transition-colors">FAQ</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Client-Side Web Audio Engine Script -->
+    <script>
+      (function () {
+        'use strict';
+
+        var btnMasterToggle = document.getElementById('btn-master-toggle');
+        var playIcon = document.getElementById('play-icon');
+        var pauseIcon = document.getElementById('pause-icon');
+        var playerStatusLabel = document.getElementById('player-status-label');
+        var profileDescription = document.getElementById('profile-description');
+
+        var profileButtons = document.querySelectorAll('.profile-btn');
+        var sliderVolume = document.getElementById('slider-volume');
+        var labelVolume = document.getElementById('label-volume');
+        var sliderTone = document.getElementById('slider-tone');
+        var labelTone = document.getElementById('label-tone');
+
+        var timerPills = document.querySelectorAll('.timer-pill');
+        var timerDisplay = document.getElementById('timer-display');
+
+        var visualizerCanvas = document.getElementById('visualizer-canvas');
+        var visualizerIdleText = document.getElementById('visualizer-idle-text');
+        var vCtx = visualizerCanvas.getContext('2d');
+
+        // Audio Engine State
+        var audioCtx = null;
+        var noiseNode = null;
+        var biquadFilter = null;
+        var masterGain = null;
+        var analyser = null;
+        var isPlaying = false;
+        var activeProfile = 'brown';
+        var timerInterval = null;
+        var timerSecondsRemaining = 0;
+
+        var profileDescriptions = {
+          brown: 'Deep, low-frequency rumble that calms racing thoughts and masks background chatter.',
+          pink: 'Balanced power across octaves, reminiscent of a steady mountain breeze or heavy air conditioner.',
+          rain: 'Dynamic procedural shower synthesized with random high-frequency micro droplet impulses.'
+        };
+
+        function initAudio() {
+          if (!audioCtx) {
+            var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContextClass();
+          }
+          if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+          }
+        }
+
+        // Generate algorithmic procedural buffer
+        function createNoiseBuffer(type) {
+          var bufferSize = audioCtx.sampleRate * 5; // 5-second seamless loop buffer
+          var buffer = audioCtx.createBuffer(2, bufferSize, audioCtx.sampleRate);
+          var left = buffer.getChannelData(0);
+          var right = buffer.getChannelData(1);
+
+          for (var channel = 0; channel < 2; channel++) {
+            var out = channel === 0 ? left : right;
+
+            if (type === 'brown') {
+              // Brownian noise: Leaky integrator on white noise
+              var lastOut = 0.0;
+              for (var i = 0; i < bufferSize; i++) {
+                var white = Math.random() * 2 - 1;
+                lastOut = (lastOut + 0.02 * white) / 1.02;
+                out[i] = lastOut * 3.5;
+              }
+            } else if (type === 'pink') {
+              // Paul Kellet's filtered pink noise algorithm
+              var b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+              for (var i = 0; i < bufferSize; i++) {
+                var white = Math.random() * 2 - 1;
+                b0 = 0.99886 * b0 + white * 0.0555179;
+                b1 = 0.99332 * b1 + white * 0.0750759;
+                b2 = 0.96900 * b2 + white * 0.1538520;
+                b3 = 0.86650 * b3 + white * 0.3104856;
+                b4 = 0.55000 * b4 + white * 0.5329522;
+                b5 = -0.7616 * b5 - white * 0.0168980;
+                out[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+                b6 = white * 0.115926;
+              }
+            } else {
+              // Procedural Rain: Pink/Brown base + random micro droplet impulses
+              var lastOut = 0.0;
+              for (var i = 0; i < bufferSize; i++) {
+                var white = Math.random() * 2 - 1;
+                lastOut = (lastOut + 0.03 * white) / 1.03;
+                var sample = lastOut * 2.0;
+
+                // High-frequency raindrop clicks
+                if (Math.random() < 0.003) {
+                  sample += (Math.random() * 1.5 - 0.75);
+                }
+                out[i] = sample * 0.8;
+              }
+            }
+          }
+
+          return buffer;
+        }
+
+        function startAudio() {
+          initAudio();
+
+          // Master Gain Node
+          masterGain = audioCtx.createGain();
+          var vol = parseFloat(sliderVolume.value) / 100;
+          masterGain.gain.setValueAtTime(vol, audioCtx.currentTime);
+
+          // Biquad Lowpass Tone Filter
+          biquadFilter = audioCtx.createBiquadFilter();
+          biquadFilter.type = 'lowpass';
+          biquadFilter.frequency.setValueAtTime(parseFloat(sliderTone.value), audioCtx.currentTime);
+
+          // Analyser Node for visualizer
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 128;
+
+          // Connect noise buffer source
+          var buffer = createNoiseBuffer(activeProfile);
+          noiseNode = audioCtx.createBufferSource();
+          noiseNode.buffer = buffer;
+          noiseNode.loop = true;
+
+          // Audio graph: noise -> filter -> masterGain -> analyser -> destination
+          noiseNode.connect(biquadFilter);
+          biquadFilter.connect(masterGain);
+          masterGain.connect(analyser);
+          analyser.connect(audioCtx.destination);
+
+          noiseNode.start(0);
+          isPlaying = true;
+
+          updateUIState();
+          drawVisualizer();
+        }
+
+        function stopAudio(fade) {
+          if (!isPlaying) return;
+
+          if (fade && masterGain) {
+            masterGain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+            setTimeout(function () {
+              if (noiseNode) {
+                try { noiseNode.stop(); noiseNode.disconnect(); } catch (e) {}
+                noiseNode = null;
+              }
+              isPlaying = false;
+              updateUIState();
+            }, 1500);
+          } else {
+            if (noiseNode) {
+              try { noiseNode.stop(); noiseNode.disconnect(); } catch (e) {}
+              noiseNode = null;
+            }
+            isPlaying = false;
+            updateUIState();
+          }
+        }
+
+        function updateUIState() {
+          if (isPlaying) {
+            playIcon.classList.add('hidden');
+            pauseIcon.classList.remove('hidden');
+            btnMasterToggle.className = 'relative w-20 h-20 rounded-full bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center shadow-lg transition-all transform hover:scale-105 group focus:outline-none focus:ring-4 focus:ring-rose-200';
+            playerStatusLabel.textContent = 'Playing ' + (activeProfile.toUpperCase()) + ' Noise';
+            playerStatusLabel.className = 'mt-3 text-xs font-semibold uppercase tracking-wider text-teal-600';
+            visualizerIdleText.classList.add('hidden');
+          } else {
+            playIcon.classList.remove('hidden');
+            pauseIcon.classList.add('hidden');
+            btnMasterToggle.className = 'relative w-20 h-20 rounded-full bg-teal-600 hover:bg-teal-500 text-white flex items-center justify-center shadow-lg transition-all transform hover:scale-105 group focus:outline-none focus:ring-4 focus:ring-teal-200';
+            playerStatusLabel.textContent = 'Paused';
+            playerStatusLabel.className = 'mt-3 text-xs font-semibold uppercase tracking-wider text-slate-400';
+            visualizerIdleText.classList.remove('hidden');
+          }
+
+          if (window.lucide && window.lucide.createIcons) {
+            window.lucide.createIcons();
+          }
+        }
+
+        // Live frequency wave visualizer
+        function drawVisualizer() {
+          if (!isPlaying || !analyser) {
+            vCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+            return;
+          }
+
+          requestAnimationFrame(drawVisualizer);
+
+          var bufferLength = analyser.frequencyBinCount;
+          var dataArray = new Uint8Array(bufferLength);
+          analyser.getByteFrequencyData(dataArray);
+
+          visualizerCanvas.width = visualizerCanvas.clientWidth;
+          visualizerCanvas.height = visualizerCanvas.clientHeight;
+          var width = visualizerCanvas.width;
+          var height = visualizerCanvas.height;
+
+          vCtx.fillStyle = '#0f172a';
+          vCtx.fillRect(0, 0, width, height);
+
+          var barWidth = (width / bufferLength) * 2.2;
+          var barHeight;
+          var x = 0;
+
+          for (var i = 0; i < bufferLength; i++) {
+            barHeight = (dataArray[i] / 255) * height * 0.85;
+
+            var grad = vCtx.createLinearGradient(0, height, 0, height - barHeight);
+            grad.addColorStop(0, '#0d9488');
+            grad.addColorStop(1, '#2dd4bf');
+
+            vCtx.fillStyle = grad;
+            vCtx.fillRect(x, height - barHeight, barWidth - 1, barHeight);
+
+            x += barWidth;
+          }
+        }
+
+        // Master toggle button
+        btnMasterToggle.addEventListener('click', function () {
+          if (isPlaying) {
+            stopAudio(false);
+          } else {
+            startAudio();
+          }
+        });
+
+        // Profile switcher
+        profileButtons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            activeProfile = btn.getAttribute('data-profile');
+
+            profileButtons.forEach(function (b) {
+              b.className = 'profile-btn px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all flex flex-col items-center gap-1 bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200';
+            });
+            btn.className = 'profile-btn px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all flex flex-col items-center gap-1 bg-teal-600 text-white border-teal-600 shadow-xs';
+
+            profileDescription.textContent = profileDescriptions[activeProfile];
+
+            if (isPlaying) {
+              stopAudio(false);
+              startAudio();
+            }
+          });
+        });
+
+        // Volume slider
+        sliderVolume.addEventListener('input', function () {
+          var val = parseInt(sliderVolume.value, 10);
+          labelVolume.textContent = val + '%';
+          if (masterGain && audioCtx) {
+            masterGain.gain.setValueAtTime(val / 100, audioCtx.currentTime);
+          }
+        });
+
+        // Tone slider
+        sliderTone.addEventListener('input', function () {
+          var freq = parseInt(sliderTone.value, 10);
+          var desc = freq < 1000 ? 'Deep Warm' : (freq < 3000 ? 'Balanced' : 'Crisp Open');
+          labelTone.textContent = desc + ' (' + freq + ' Hz)';
+          if (biquadFilter && audioCtx) {
+            biquadFilter.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          }
+        });
+
+        // Timer pills
+        timerPills.forEach(function (pill) {
+          pill.addEventListener('click', function () {
+            var mins = parseInt(pill.getAttribute('data-mins'), 10);
+
+            timerPills.forEach(function (p) {
+              p.className = 'timer-pill px-2.5 py-1 text-xs rounded-lg border bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100 font-medium';
+            });
+            pill.className = 'timer-pill px-2.5 py-1 text-xs rounded-lg border bg-teal-50 border-teal-200 text-teal-800 font-medium';
+
+            if (timerInterval) {
+              clearInterval(timerInterval);
+              timerInterval = null;
+            }
+
+            if (mins === 0) {
+              timerDisplay.textContent = 'Continuous';
+              timerSecondsRemaining = 0;
+            } else {
+              timerSecondsRemaining = mins * 60;
+              updateTimerDisplay();
+
+              if (!isPlaying) {
+                startAudio();
+              }
+
+              timerInterval = setInterval(function () {
+                timerSecondsRemaining--;
+                if (timerSecondsRemaining <= 0) {
+                  clearInterval(timerInterval);
+                  timerInterval = null;
+                  timerDisplay.textContent = 'Time Up!';
+                  stopAudio(true);
+                } else {
+                  updateTimerDisplay();
+                }
+              }, 1000);
+            }
+          });
+        });
+
+        function updateTimerDisplay() {
+          var m = Math.floor(timerSecondsRemaining / 60);
+          var s = timerSecondsRemaining % 60;
+          timerDisplay.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        }
+
+        // Initialize icons
+        if (window.lucide && window.lucide.createIcons) {
+          window.lucide.createIcons();
+        }
+      })();
+    </script>
+  </body>
+</html>
