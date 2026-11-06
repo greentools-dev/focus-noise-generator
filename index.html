@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Procedural Focus Noise &amp; Rain Generator | Hardware &amp; Tactile Analog Studio</title>
-  <meta name="description" content="Infinite algorithmic focus soundscapes synthesized 100% locally in browser memory. Brownian Deep, Pink Ambient, and Procedural Rain with hardware tone filter, Pomodoro timer, and zero tracking.">
-  <meta name="keywords" content="focus noise generator, brownian noise adhd, procedural rain soundscape, pink noise web audio, hardware analog noise machine, zero tracking audio generator">
+  <title>Brain.fm &amp; Lo-Fi Multi-Track Focus Engine | GreenTools.dev</title>
+  <meta name="description" content="Brain.fm-grade focus acoustic console combining real high-fidelity soundscapes (Lo-Fi Study Beats, Deep Midnight Rain, Vinyl, Cosmic Drone) with real-time binaural neural modulation (Alpha 10Hz, Beta 18Hz, Theta 6Hz). 100% private in-browser Web Audio DSP.">
+  <meta name="keywords" content="brain.fm alternative, focus noise generator, lo-fi study beats generator, binaural beats alpha wave 10hz, beta focus 18hz, procedural rain thunder, client-side soundscape engine, zero telemetry audio">
   <link rel="canonical" href="https://greentools-dev.github.io/focus-noise-generator/">
-  <meta property="og:title" content="Procedural Focus Noise &amp; Rain Generator | GreenTools.dev">
-  <meta property="og:description" content="100% Private, algorithmic Brownian, Pink, and Procedural Rain soundscapes with hardware dials, tone filter, and Pomodoro focus timer.">
+  <meta property="og:title" content="Brain.fm &amp; Lo-Fi Multi-Track Focus Engine | GreenTools.dev">
+  <meta property="og:description" content="Multi-track acoustic soundscapes paired with real-time binaural neural entrainment. 100% offline in browser memory.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://greentools-dev.github.io/focus-noise-generator/">
 
@@ -58,7 +58,7 @@
     .serif { font-family: 'Fraunces', Georgia, serif; }
     .mono { font-family: 'JetBrains Mono', monospace; }
 
-    /* Custom Hardware Sliders */
+    /* Custom Hardware Range Sliders */
     input[type=range].hardware-slider {
       -webkit-appearance: none;
       width: 100%;
@@ -77,13 +77,13 @@
       box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
     }
     input[type=range].hardware-slider::-webkit-slider-thumb {
-      height: 24px;
-      width: 24px;
+      height: 22px;
+      width: 22px;
       border-radius: 50%;
       background: #111110;
       cursor: pointer;
       -webkit-appearance: none;
-      margin-top: -8px;
+      margin-top: -7px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 0 0 3px #C97A3E;
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
@@ -95,7 +95,7 @@
       transform: scale(1.02);
     }
 
-    /* Mechanical toggle switch styling */
+    /* Tactile Switch Buttons */
     .tactile-switch {
       box-shadow: 0 2px 4px rgba(17, 17, 16, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
       transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
@@ -108,6 +108,16 @@
       color: #FBFBF9;
       border-color: #111110;
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Amber LED Pulse */
+    @keyframes amber-glow {
+      0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 3px #C97A3E); }
+      50% { opacity: 1; filter: drop-shadow(0 0 8px #C97A3E); }
+    }
+    .amber-active-led {
+      animation: amber-glow 2s infinite ease-in-out;
+      background-color: #C97A3E;
     }
   </style>
 </head>
@@ -122,7 +132,7 @@
           <span class="serif font-bold tracking-tight text-xl text-[#111110]">GreenTools<span class="text-[#1A362B]">.dev</span></span>
         </a>
         <span class="text-[#EAE8E3]">/</span>
-        <span class="text-xs font-semibold px-2 py-0.5 rounded bg-[#EAE8E3] text-[#111110] uppercase tracking-wider">Audio Lab</span>
+        <span class="text-xs font-semibold px-2 py-0.5 rounded bg-[#EAE8E3] text-[#111110] uppercase tracking-wider">Acoustic Console</span>
       </div>
 
       <div class="flex items-center gap-4">
@@ -131,7 +141,7 @@
         </a>
         <span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-[#76746E]">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          DSP_CORE // 48kHz_32bit
+          DSP_CORE // 48kHz_32bit // MULTI_BUS
         </span>
       </div>
     </div>
@@ -144,13 +154,13 @@
     <div class="text-center max-w-2xl mx-auto mb-10">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAE8E3] text-[#111110] text-xs font-mono uppercase mb-3">
         <i data-lucide="radio" class="w-3.5 h-3.5 text-[#1A362B]"></i>
-        HARDWARE_ANALOG_STUDIO // BS.1770-4
+        BRAIN.FM_ENGINE // BINAURAL_NEURAL_DSP
       </div>
       <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-[#111110] serif mb-4">
-        Procedural White Noise &amp; Rain
+        Focus Soundscapes &amp; Neural Modulation
       </h1>
       <p class="text-sm sm:text-base text-[#76746E] leading-relaxed">
-        Continuous algorithmic acoustic masking synthesized 100% in browser memory. No looping audio files, zero network requests, and absolute offline privacy.
+        Dual-engine acoustic console. Blend high-fidelity lo-fi beats, deep rain, and vinyl with real-time synthesized binaural entrainment (Alpha, Beta, Theta). 100% in browser memory with zero telemetry.
       </p>
     </div>
 
@@ -158,18 +168,18 @@
     <div class="bg-[#F4F3EE] border border-[#E2DFD8] rounded-3xl p-6 sm:p-10 shadow-sm mb-12">
       
       <!-- Top Console Readout Strip -->
-      <div class="flex items-center justify-between border-b border-[#E2DFD8] pb-4 mb-8 text-xs font-mono text-[#76746E]">
-        <div class="flex items-center gap-2">
+      <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#E2DFD8] pb-4 mb-8 text-xs font-mono text-[#76746E] gap-3">
+        <div class="flex items-center gap-2.5">
           <span id="led-indicator" class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
           <span id="engine-status">AUDIO_ENGINE: STANDBY</span>
         </div>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 text-[11px]">
           <span id="vu-left">L: [░░░░░░░░░░]</span>
           <span id="vu-right">R: [░░░░░░░░░░]</span>
         </div>
       </div>
 
-      <!-- Center Master Button -->
+      <!-- Master Power Button -->
       <div class="flex flex-col items-center justify-center mb-10">
         <button
           id="btn-master-power"
@@ -178,62 +188,200 @@
           <i data-lucide="power" id="icon-power" class="w-8 h-8 text-[#C97A3E] group-hover:scale-110 transition-transform"></i>
           <span id="label-power" class="font-mono text-xs font-bold tracking-widest uppercase">START</span>
         </button>
-        <span class="text-xs font-mono text-[#76746E] mt-3 tracking-wider uppercase">Master Engine Switch</span>
+        <span class="text-xs font-mono text-[#76746E] mt-3 tracking-wider uppercase">Master Bus Output</span>
       </div>
 
-      <!-- Environment Selector: 3 Mechanical Push-Capsules -->
-      <div class="mb-10">
-        <label class="block text-xs font-mono font-bold text-[#76746E] uppercase tracking-wider mb-3 text-center sm:text-left">
-          Select Acoustic Profile
-        </label>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="env-selector">
+      <!-- SECTION 1: CHANNEL 1 - ACOUSTIC SOUNDSCAPE SELECTOR -->
+      <div class="mb-10 p-5 rounded-2xl bg-white border border-[#E2DFD8] shadow-2xs">
+        <div class="flex items-center justify-between mb-3.5">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-[#F4F3EE] text-[10px] font-mono font-bold text-[#111110]">BUS 01</span>
+            <label class="text-xs font-mono font-bold text-[#111110] uppercase tracking-wider">
+              Channel 1: Acoustic Soundscapes &amp; Lo-Fi
+            </label>
+          </div>
+          <span id="soundscape-status-tag" class="text-[11px] font-mono text-[#76746E]">LO-FI STUDY ACTIVE</span>
+        </div>
+
+        <!-- 4 Capsule Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-5" id="soundscape-selector">
           
           <button
             type="button"
-            data-env="brown"
-            class="tactile-switch active p-4 rounded-2xl border border-[#111110] text-left flex flex-col justify-between"
+            data-soundscape="lofi"
+            class="tactile-switch active p-3.5 rounded-xl border border-[#111110] text-left flex flex-col justify-between"
           >
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-serif font-bold text-base">Brownian Deep</span>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-serif font-bold text-sm">Lo-Fi Study</span>
               <span class="w-2 h-2 rounded-full bg-[#C97A3E]"></span>
             </div>
-            <p class="text-xs opacity-80 leading-relaxed font-sans">
-              Low-frequency rumble with natural 1/f² falloff. Clears sensory overstimulation.
+            <p class="text-[11px] opacity-80 leading-snug font-sans">
+              Warm electric piano chords with soft sidechain pump.
             </p>
           </button>
 
           <button
             type="button"
-            data-env="pink"
-            class="tactile-switch p-4 rounded-2xl border border-[#E2DFD8] bg-white text-left flex flex-col justify-between"
+            data-soundscape="rain"
+            class="tactile-switch p-3.5 rounded-xl border border-[#E2DFD8] bg-[#FBFBF9] text-left flex flex-col justify-between"
           >
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-serif font-bold text-base">Pink Ambient</span>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-serif font-bold text-sm">Deep Rain</span>
               <span class="w-2 h-2 rounded-full bg-slate-300"></span>
             </div>
-            <p class="text-xs text-[#76746E] leading-relaxed font-sans">
-              Balanced 1/f airflow profile mimicking natural waterfall acoustics.
+            <p class="text-[11px] text-[#76746E] leading-snug font-sans">
+              Rain on glass window with distant thunder roll.
             </p>
           </button>
 
           <button
             type="button"
-            data-env="rain"
-            class="tactile-switch p-4 rounded-2xl border border-[#E2DFD8] bg-white text-left flex flex-col justify-between"
+            data-soundscape="vinyl"
+            class="tactile-switch p-3.5 rounded-xl border border-[#E2DFD8] bg-[#FBFBF9] text-left flex flex-col justify-between"
           >
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-serif font-bold text-base">Procedural Rain</span>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-serif font-bold text-sm">Tape &amp; Vinyl</span>
               <span class="w-2 h-2 rounded-full bg-slate-300"></span>
             </div>
-            <p class="text-xs text-[#76746E] leading-relaxed font-sans">
-              Stochastic Poisson droplet synthesis with dynamic low-frequency patter.
+            <p class="text-[11px] text-[#76746E] leading-snug font-sans">
+              33⅓ RPM groove hum, micro-crackle &amp; tape flutter.
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-soundscape="drone"
+            class="tactile-switch p-3.5 rounded-xl border border-[#E2DFD8] bg-[#FBFBF9] text-left flex flex-col justify-between"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-serif font-bold text-sm">Cosmic Drone</span>
+              <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+            </div>
+            <p class="text-[11px] text-[#76746E] leading-snug font-sans">
+              432 Hz Pythagorean ambient pad with filter sweep.
             </p>
           </button>
 
         </div>
+
+        <!-- Ambient Bus Volume Fader -->
+        <div class="space-y-1.5 pt-2">
+          <div class="flex items-center justify-between text-xs font-mono font-bold text-[#52504B]">
+            <span class="flex items-center gap-1.5">
+              <i data-lucide="volume-1" class="w-3.5 h-3.5 text-[#1A362B]"></i>
+              AMBIENT_BUS VOLUME FADER
+            </span>
+            <span id="display-ambient-vol" class="text-[#1A362B] font-bold">80% (-2.0 dB)</span>
+          </div>
+          <input
+            id="slider-ambient-vol"
+            type="range"
+            min="0"
+            max="100"
+            value="80"
+            class="hardware-slider"
+          />
+        </div>
       </div>
 
-      <!-- Hardware Dials & Sliders (Volume + Tone Filter) -->
+      <!-- SECTION 2: CHANNEL 2 - BRAIN.FM NEURAL MODULATION LAYER -->
+      <div class="mb-10 p-5 rounded-2xl bg-white border border-[#E2DFD8] shadow-2xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-[#F4F3EE] text-[10px] font-mono font-bold text-[#111110]">BUS 02</span>
+            <label class="text-xs font-mono font-bold text-[#111110] uppercase tracking-wider">
+              Channel 2: Brain.fm Neural Modulation Layer
+            </label>
+          </div>
+
+          <!-- Neural Master Toggle Switch -->
+          <div class="flex items-center gap-3">
+            <span id="neural-led" class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="toggle-neural" class="sr-only peer" checked>
+              <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1A362B]"></div>
+              <span class="ml-2 text-xs font-mono font-bold text-[#111110]">BINAURAL_DSP: ON</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 3 Entrainment Presets -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5" id="binaural-selector">
+          
+          <button
+            type="button"
+            data-preset="alpha"
+            class="binaural-btn active p-3.5 rounded-xl border border-[#111110] bg-[#111110] text-white text-left flex flex-col justify-between transition"
+          >
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-serif font-bold text-sm">Alpha Flow (10 Hz)</span>
+              <span class="px-1.5 py-0.2 rounded bg-[#C97A3E] text-[10px] font-mono text-white">DEEP WORK</span>
+            </div>
+            <p class="text-[11px] opacity-80 leading-snug font-sans">
+              210 Hz (L) / 220 Hz (R). Coding sprints &amp; reading flow state.
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-preset="beta"
+            class="binaural-btn p-3.5 rounded-xl border border-[#E2DFD8] bg-[#FBFBF9] text-[#111110] text-left flex flex-col justify-between hover:bg-[#F4F3EE] transition"
+          >
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-serif font-bold text-sm">Beta Focus (18 Hz)</span>
+              <span class="px-1.5 py-0.2 rounded bg-[#EAE6DF] text-[10px] font-mono text-[#52504B]">HIGH ALERT</span>
+            </div>
+            <p class="text-[11px] text-[#76746E] leading-snug font-sans">
+              240 Hz (L) / 258 Hz (R). Debugging, complex logic &amp; analysis.
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-preset="theta"
+            class="binaural-btn p-3.5 rounded-xl border border-[#E2DFD8] bg-[#FBFBF9] text-[#111110] text-left flex flex-col justify-between hover:bg-[#F4F3EE] transition"
+          >
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-serif font-bold text-sm">Theta Reset (6 Hz)</span>
+              <span class="px-1.5 py-0.2 rounded bg-[#EAE6DF] text-[10px] font-mono text-[#52504B]">IDEATION</span>
+            </div>
+            <p class="text-[11px] text-[#76746E] leading-snug font-sans">
+              180 Hz (L) / 186 Hz (R). Creative brainstorming &amp; calm recovery.
+            </p>
+          </button>
+
+        </div>
+
+        <!-- Modulation Depth Slider & Freq Readout -->
+        <div class="space-y-3 pt-2">
+          <div class="flex items-center justify-between text-xs font-mono font-bold text-[#52504B]">
+            <span class="flex items-center gap-1.5">
+              <i data-lucide="waves" class="w-3.5 h-3.5 text-[#C97A3E]"></i>
+              MODULATION DEPTH (WET/DRY MIX)
+            </span>
+            <span id="display-neural-depth" class="text-[#C97A3E] font-bold">45% WET MIX</span>
+          </div>
+          <input
+            id="slider-neural-depth"
+            type="range"
+            min="0"
+            max="100"
+            value="45"
+            class="hardware-slider"
+          />
+
+          <!-- Live Entrainment Carrier Readout & Waveform Monitor -->
+          <div class="p-3 rounded-xl bg-[#F4F3EE] border border-[#E2DFD8] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono">
+            <div class="flex items-center gap-2 text-[#52504B]">
+              <span class="w-2 h-2 rounded-full bg-[#C97A3E] animate-ping"></span>
+              <span id="carrier-readout">CARRIER: 210 Hz (L) / 220 Hz (R) // BEAT: 10.0 Hz ALPHA</span>
+            </div>
+            <canvas id="binaural-wave-canvas" width="160" height="28" class="rounded bg-white border border-[#E2DFD8]"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: MASTER STAGE & ANALOG TONE FILTER -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 border-t border-[#E2DFD8] pt-8 mb-8">
         
         <!-- Master Volume -->
@@ -241,7 +389,7 @@
           <div class="flex items-center justify-between text-xs font-mono font-bold text-[#111110]">
             <span class="flex items-center gap-1.5 uppercase">
               <i data-lucide="volume-2" class="w-4 h-4 text-[#C97A3E]"></i>
-              Master Gain
+              Master Output Gain
             </span>
             <span id="display-volume" class="text-[#C97A3E]">-4.2 dB (70%)</span>
           </div>
@@ -259,14 +407,14 @@
           </div>
         </div>
 
-        <!-- Tone / Warmth Biquad Lowpass Filter -->
+        <!-- Tone Lowpass Filter -->
         <div class="space-y-3">
           <div class="flex items-center justify-between text-xs font-mono font-bold text-[#111110]">
             <span class="flex items-center gap-1.5 uppercase">
               <i data-lucide="sliders" class="w-4 h-4 text-[#C97A3E]"></i>
               Tone Filter (Biquad Lowpass)
             </span>
-            <span id="display-tone" class="text-[#C97A3E]">1,200 Hz [WARM]</span>
+            <span id="display-tone" class="text-[#C97A3E]">1,400 Hz [WARM AIR]</span>
           </div>
           <input
             id="slider-tone"
@@ -274,7 +422,7 @@
             min="200"
             max="8000"
             step="50"
-            value="1200"
+            value="1400"
             class="hardware-slider"
           />
           <div class="flex justify-between text-[10px] font-mono text-[#76746E]">
@@ -285,14 +433,14 @@
 
       </div>
 
-      <!-- Integrated Pomodoro Focus Timer with Fade-out -->
+      <!-- SECTION 4: INTEGRATED POMODORO TIMER WITH FADE-OUT -->
       <div class="border-t border-[#E2DFD8] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <span class="block text-xs font-mono font-bold text-[#111110] uppercase mb-1">
             Pomodoro Focus Sprint Timer
           </span>
           <p class="text-xs text-[#76746E]">
-            Gentle 10-second exponential audio fade-out when session ends.
+            Automatic 10-second exponential audio fade-out when session ends.
           </p>
         </div>
 
@@ -305,7 +453,7 @@
         </div>
       </div>
 
-      <!-- Active Timer Countdown Banner -->
+      <!-- Active Countdown Banner -->
       <div id="timer-active-banner" class="hidden mt-4 p-3 rounded-xl bg-white border border-[#E2DFD8] flex items-center justify-between text-xs font-mono">
         <span class="flex items-center gap-2 text-[#111110] font-bold">
           <span class="w-2 h-2 rounded-full bg-[#C97A3E] animate-ping"></span>
@@ -342,27 +490,34 @@
     <!-- Scientific & DSP Architecture Section -->
     <section class="border-t border-[#EAE8E3] pt-12">
       <div class="max-w-3xl mx-auto space-y-6">
-        <h2 class="serif text-2xl font-bold text-[#111110] text-center">Algorithmic Noise Synthesis &bull; Technical Specifications</h2>
+        <h2 class="serif text-2xl font-bold text-[#111110] text-center">Neural Entrainment &amp; Soundscape Architecture</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
           <div class="p-4 rounded-xl border border-[#EAE8E3] bg-white">
-            <span class="text-[#C97A3E] font-bold block mb-1">01 // BROWNIAN NOISE</span>
+            <span class="text-[#C97A3E] font-bold block mb-1">01 // ALPHA FLOW (10 Hz)</span>
             <p class="text-[#76746E] font-sans">
-              Computed via a first-order leaky integration model (<code>y[n] = 0.98·y[n-1] + 0.02·w[n]</code>). Energy density falls off at 6 dB per octave.
+              210 Hz left ear and 220 Hz right ear. Superior olivary phase-locking creates a 10 Hz beat frequency synchronizing thalamocortical oscillations for deep focus.
             </p>
           </div>
           <div class="p-4 rounded-xl border border-[#EAE8E3] bg-white">
-            <span class="text-[#C97A3E] font-bold block mb-1">02 // PINK AMBIENT</span>
+            <span class="text-[#C97A3E] font-bold block mb-1">02 // BETA FOCUS (18 Hz)</span>
             <p class="text-[#76746E] font-sans">
-              Synthesized through Paul Kellet's optimized 3-pole IIR filter algorithm delivering an accurate 3 dB per octave 1/f spectral attenuation.
+              240 Hz left and 258 Hz right. Triggers high-frequency cortical alertness, ideal for intense analytical debugging and complex programmatic logic.
             </p>
           </div>
           <div class="p-4 rounded-xl border border-[#EAE8E3] bg-white">
-            <span class="text-[#C97A3E] font-bold block mb-1">03 // PROCEDURAL RAIN</span>
+            <span class="text-[#C97A3E] font-bold block mb-1">03 // THETA RESET (6 Hz)</span>
             <p class="text-[#76746E] font-sans">
-              Generated via randomized Poisson-distributed impulse transients convolved with resonance envelopes to mimic real rain droplets.
+              180 Hz left and 186 Hz right. Induces hypnagogic creative states, breaking mental loops and facilitating divergent architectural ideation.
             </p>
           </div>
+        </div>
+
+        <div class="p-4 rounded-xl border border-[#EAE8E3] bg-white text-xs space-y-2">
+          <h4 class="font-bold text-[#111110]">Why Headphones Are Recommended for Binaural Entrainment</h4>
+          <p class="text-[#76746E] leading-relaxed">
+            Binaural beats require separate carrier frequencies delivered isolated to each ear so that the brainstem synthesizes the neurological beat. When using stereo speakers, acoustic waves mix in the room air, creating a natural acoustic tremolo rather than true neural entrainment.
+          </p>
         </div>
       </div>
     </section>
@@ -376,7 +531,7 @@
         <span class="w-2.5 h-2.5 rounded-full bg-[#1A362B]"></span>
         <span class="serif font-bold text-[#111110]">GreenTools.dev</span>
         <span>&bull;</span>
-        <span>Procedural Noise Lab (100% Client-Side DSP)</span>
+        <span>Procedural Focus Engine (100% Client-Side Multi-Bus DSP)</span>
       </div>
       <div>
         <a href="https://launchist.store" target="_blank" class="hover:text-black font-semibold transition">Handcrafted for Intentional Systems &rarr;</a>
@@ -384,82 +539,191 @@
     </div>
   </footer>
 
-  <!-- Web Audio DSP Engine -->
+  <!-- Web Audio DSP Multi-Bus Engine -->
   <script>
+    // Audio Context & Graph
     let audioCtx = null;
     let isPlaying = false;
-    let sourceNode = null;
-    let biquadFilter = null;
-    let gainNode = null;
 
-    let currentEnv = 'brown';
-    let currentVolume = 0.7;
-    let currentTone = 1200;
+    // Bus 1: Acoustic Soundscape Nodes
+    let soundscapeSource = null;
+    let soundscapeGainNode = null;
+    let currentSoundscape = 'lofi';
+    let soundscapeVolume = 0.8;
+    const soundscapeBufferCache = {};
+
+    // Bus 2: Brain.fm Neural Modulation Nodes
+    let neuralOscLeft = null;
+    let neuralOscRight = null;
+    let neuralGainLeft = null;
+    let neuralGainRight = null;
+    let neuralMerger = null;
+    let neuralDepthGain = null;
+    let isNeuralActive = true;
+    let currentNeuralPreset = 'alpha';
+    let neuralDepth = 0.45;
+
+    // Master Bus Nodes
+    let masterFilter = null;
+    let masterGain = null;
+    let masterAnalyser = null;
+    let masterVolume = 0.7;
+    let currentTone = 1400;
 
     // Timer State
     let timerDurationMins = 0;
     let timerRemainingSecs = 0;
     let timerInterval = null;
 
+    // Binaural Frequency Configurations
+    const BINAURAL_CONFIGS = {
+      alpha: {
+        name: "Alpha Flow",
+        tag: "10.0 Hz ALPHA WAVE",
+        fLeft: 210,
+        fRight: 220,
+        beat: 10,
+        carrierText: "CARRIER: 210 Hz (L) / 220 Hz (R) // BEAT: 10.0 Hz ALPHA"
+      },
+      beta: {
+        name: "Beta Focus",
+        tag: "18.0 Hz BETA WAVE",
+        fLeft: 240,
+        fRight: 258,
+        beat: 18,
+        carrierText: "CARRIER: 240 Hz (L) / 258 Hz (R) // BEAT: 18.0 Hz BETA"
+      },
+      theta: {
+        name: "Theta Reset",
+        tag: "6.0 Hz THETA WAVE",
+        fLeft: 180,
+        fRight: 186,
+        beat: 6,
+        carrierText: "CARRIER: 180 Hz (L) / 186 Hz (R) // BEAT: 6.0 Hz THETA"
+      }
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
-      setupControls();
+      setupUIEventListeners();
+      startWaveformCanvasAnimation();
     });
 
-    function setupControls() {
-      // Master Power Button
-      document.getElementById('btn-master-power').addEventListener('click', togglePower);
+    function setupUIEventListeners() {
+      // Master Power
+      document.getElementById('btn-master-power').addEventListener('click', toggleMasterPower);
 
-      // Environment Switches
-      document.querySelectorAll('#env-selector button').forEach(btn => {
+      // Channel 1: Soundscape Selector
+      document.querySelectorAll('#soundscape-selector button').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.querySelectorAll('#env-selector button').forEach(b => {
+          document.querySelectorAll('#soundscape-selector button').forEach(b => {
             b.classList.remove('active', 'border-[#111110]', 'bg-[#111110]', 'text-white');
-            b.classList.add('border-[#E2DFD8]', 'bg-white', 'text-[#111110]');
+            b.classList.add('border-[#E2DFD8]', 'bg-[#FBFBF9]', 'text-[#111110]');
             b.querySelector('span.rounded-full').className = 'w-2 h-2 rounded-full bg-slate-300';
             const p = b.querySelector('p');
-            if (p) p.className = 'text-xs text-[#76746E] leading-relaxed font-sans';
+            if (p) p.className = 'text-[11px] text-[#76746E] leading-snug font-sans';
           });
 
           btn.classList.add('active', 'border-[#111110]', 'bg-[#111110]', 'text-white');
-          btn.classList.remove('border-[#E2DFD8]', 'bg-white');
+          btn.classList.remove('border-[#E2DFD8]', 'bg-[#FBFBF9]');
           btn.querySelector('span.rounded-full').className = 'w-2 h-2 rounded-full bg-[#C97A3E]';
           const p = btn.querySelector('p');
-          if (p) p.className = 'text-xs opacity-80 leading-relaxed font-sans';
+          if (p) p.className = 'text-[11px] opacity-80 leading-snug font-sans';
 
-          currentEnv = btn.dataset.env;
+          currentSoundscape = btn.dataset.soundscape;
+          document.getElementById('soundscape-status-tag').textContent = `${btn.querySelector('.font-serif').textContent.toUpperCase()} ACTIVE`;
+
           if (isPlaying) {
-            restartAudioStream();
+            switchSoundscapeStream();
           }
         });
       });
 
-      // Volume Slider
-      const volSlider = document.getElementById('slider-volume');
-      volSlider.addEventListener('input', (e) => {
+      // Soundscape Volume Fader
+      document.getElementById('slider-ambient-vol').addEventListener('input', (e) => {
         const val = parseInt(e.target.value);
-        currentVolume = val / 100;
+        soundscapeVolume = val / 100;
+        const dB = val === 0 ? '-∞' : ((val - 100) * 0.35).toFixed(1);
+        document.getElementById('display-ambient-vol').textContent = `${val}% (${dB} dB)`;
+        if (soundscapeGainNode && audioCtx) {
+          soundscapeGainNode.gain.setTargetAtTime(soundscapeVolume, audioCtx.currentTime, 0.05);
+        }
+      });
+
+      // Channel 2: Neural Toggle Switch
+      document.getElementById('toggle-neural').addEventListener('change', (e) => {
+        isNeuralActive = e.target.checked;
+        const led = document.getElementById('neural-led');
+        if (isNeuralActive) {
+          led.className = 'w-2.5 h-2.5 rounded-full bg-[#C97A3E] animate-pulse';
+        } else {
+          led.className = 'w-2.5 h-2.5 rounded-full bg-slate-300';
+        }
+
+        if (neuralDepthGain && audioCtx) {
+          const target = isNeuralActive ? neuralDepth : 0.0001;
+          neuralDepthGain.gain.setTargetAtTime(target, audioCtx.currentTime, 0.05);
+        }
+      });
+
+      // Channel 2: Binaural Presets (Alpha, Beta, Theta)
+      document.querySelectorAll('#binaural-selector button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#binaural-selector button').forEach(b => {
+            b.classList.remove('active', 'border-[#111110]', 'bg-[#111110]', 'text-white');
+            b.classList.add('border-[#E2DFD8]', 'bg-[#FBFBF9]', 'text-[#111110]');
+            const badge = b.querySelector('span.font-mono');
+            if (badge) badge.className = 'px-1.5 py-0.2 rounded bg-[#EAE6DF] text-[10px] font-mono text-[#52504B]';
+            const p = b.querySelector('p');
+            if (p) p.className = 'text-[11px] text-[#76746E] leading-snug font-sans';
+          });
+
+          btn.classList.add('active', 'border-[#111110]', 'bg-[#111110]', 'text-white');
+          btn.classList.remove('border-[#E2DFD8]', 'bg-[#FBFBF9]', 'text-[#111110]');
+          const badge = btn.querySelector('span.font-mono');
+          if (badge) badge.className = 'px-1.5 py-0.2 rounded bg-[#C97A3E] text-[10px] font-mono text-white';
+          const p = btn.querySelector('p');
+          if (p) p.className = 'text-[11px] opacity-80 leading-snug font-sans';
+
+          currentNeuralPreset = btn.dataset.preset;
+          applyBinauralPreset(currentNeuralPreset);
+        });
+      });
+
+      // Modulation Depth Slider
+      document.getElementById('slider-neural-depth').addEventListener('input', (e) => {
+        const val = parseInt(e.target.value);
+        neuralDepth = (val / 100) * 0.8; // max 80% to avoid overpowering soundscape
+        document.getElementById('display-neural-depth').textContent = `${val}% WET MIX`;
+        if (neuralDepthGain && audioCtx && isNeuralActive) {
+          neuralDepthGain.gain.setTargetAtTime(neuralDepth, audioCtx.currentTime, 0.05);
+        }
+      });
+
+      // Master Volume Slider
+      document.getElementById('slider-volume').addEventListener('input', (e) => {
+        const val = parseInt(e.target.value);
+        masterVolume = val / 100;
         const dB = val === 0 ? '-∞' : ((val - 100) * 0.4).toFixed(1);
         document.getElementById('display-volume').textContent = `${dB} dB (${val}%)`;
-        if (gainNode && audioCtx) {
-          gainNode.gain.setTargetAtTime(currentVolume, audioCtx.currentTime, 0.05);
+        if (masterGain && audioCtx) {
+          masterGain.gain.setTargetAtTime(masterVolume, audioCtx.currentTime, 0.05);
         }
       });
 
-      // Tone Slider
-      const toneSlider = document.getElementById('slider-tone');
-      toneSlider.addEventListener('input', (e) => {
+      // Tone Lowpass Filter Slider
+      document.getElementById('slider-tone').addEventListener('input', (e) => {
         currentTone = parseInt(e.target.value);
-        let tag = 'WARM';
+        let tag = 'WARM AIR';
         if (currentTone < 600) tag = 'DEEP MUFFLE';
-        else if (currentTone > 4000) tag = 'BRIGHT AIR';
+        else if (currentTone > 4000) tag = 'BRIGHT OPEN';
         document.getElementById('display-tone').textContent = `${currentTone.toLocaleString()} Hz [${tag}]`;
-        if (biquadFilter && audioCtx) {
-          biquadFilter.frequency.setTargetAtTime(currentTone, audioCtx.currentTime, 0.05);
+        if (masterFilter && audioCtx) {
+          masterFilter.frequency.setTargetAtTime(currentTone, audioCtx.currentTime, 0.05);
         }
       });
 
-      // Timer Presets
+      // Pomodoro Timer Presets
       document.querySelectorAll('#timer-presets button').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('#timer-presets button').forEach(b => {
@@ -469,11 +733,12 @@
           btn.classList.add('border-[#111110]', 'bg-[#111110]', 'text-white');
           btn.classList.remove('border-[#E2DFD8]', 'bg-white');
 
-          setTimer(parseInt(btn.dataset.mins));
+          setTimerSession(parseInt(btn.dataset.mins));
         });
       });
     }
 
+    // AUDIO CONTEXT INITIALIZATION
     function initAudioContext() {
       if (!audioCtx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -484,49 +749,58 @@
       }
     }
 
-    function togglePower() {
+    function toggleMasterPower() {
       initAudioContext();
       if (!isPlaying) {
-        startAudioStream();
+        startMultiBusAudioEngine();
       } else {
-        stopAudioStream();
+        stopMultiBusAudioEngine();
       }
     }
 
-    function startAudioStream() {
+    // MULTI-BUS AUDIO ENGINE START
+    function startMultiBusAudioEngine() {
       initAudioContext();
 
-      // Create procedural noise buffer (5-second seamless loop)
-      const buffer = createProceduralBuffer(currentEnv);
-      sourceNode = audioCtx.createBufferSource();
-      sourceNode.buffer = buffer;
-      sourceNode.loop = true;
+      // 1. Setup Master Bus
+      masterFilter = audioCtx.createBiquadFilter();
+      masterFilter.type = 'lowpass';
+      masterFilter.frequency.setValueAtTime(currentTone, audioCtx.currentTime);
+      masterFilter.Q.setValueAtTime(0.707, audioCtx.currentTime);
 
-      // Create Biquad Lowpass Filter
-      biquadFilter = audioCtx.createBiquadFilter();
-      biquadFilter.type = 'lowpass';
-      biquadFilter.frequency.setValueAtTime(currentTone, audioCtx.currentTime);
-      biquadFilter.Q.setValueAtTime(0.707, audioCtx.currentTime); // Butterworth Q
+      masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      masterGain.gain.exponentialRampToValueAtTime(Math.max(0.001, masterVolume), audioCtx.currentTime + 0.3);
 
-      // Master Gain Node
-      gainNode = audioCtx.createGain();
-      gainNode.gain.setValueAtTime(0.001, audioCtx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(Math.max(0.001, currentVolume), audioCtx.currentTime + 0.3);
+      masterAnalyser = audioCtx.createAnalyser();
+      masterAnalyser.fftSize = 64;
 
-      // Graph: Source -> Filter -> Gain -> Destination
-      sourceNode.connect(biquadFilter);
-      biquadFilter.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
+      masterFilter.connect(masterGain);
+      masterGain.connect(masterAnalyser);
+      masterAnalyser.connect(audioCtx.destination);
 
-      sourceNode.start(0);
+      // 2. Setup Channel 1: Acoustic Soundscape Bus
+      soundscapeGainNode = audioCtx.createGain();
+      soundscapeGainNode.gain.setValueAtTime(soundscapeVolume, audioCtx.currentTime);
+      soundscapeGainNode.connect(masterFilter);
+
+      startSoundscapeStream(currentSoundscape);
+
+      // 3. Setup Channel 2: Brain.fm Binaural Neural Modulation Bus
+      setupBinauralDSPBus();
+
       isPlaying = true;
 
       // Update UI
       document.getElementById('led-indicator').className = 'w-2.5 h-2.5 rounded-full bg-[#C97A3E] animate-pulse';
-      document.getElementById('engine-status').textContent = `AUDIO_ENGINE: RUNNING // ${currentEnv.toUpperCase()}`;
+      document.getElementById('engine-status').textContent = `AUDIO_ENGINE: RUNNING // ${currentSoundscape.toUpperCase()} + ${currentNeuralPreset.toUpperCase()}`;
       document.getElementById('btn-master-power').classList.add('ring-4', 'ring-[#C97A3E]/30');
       document.getElementById('label-power').textContent = 'STOP';
       document.getElementById('label-power').className = 'font-mono text-xs font-bold tracking-widest uppercase text-[#C97A3E]';
+
+      if (isNeuralActive) {
+        document.getElementById('neural-led').className = 'w-2.5 h-2.5 rounded-full bg-[#C97A3E] animate-pulse';
+      }
 
       startVUMeter();
 
@@ -535,22 +809,37 @@
       }
     }
 
-    function stopAudioStream(fadeDuration = 0.3) {
+    function stopMultiBusAudioEngine(fadeDuration = 0.3) {
       if (!isPlaying) return;
 
-      if (gainNode && audioCtx) {
-        gainNode.gain.setTargetAtTime(0.0001, audioCtx.currentTime, fadeDuration);
+      if (masterGain && audioCtx) {
+        masterGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, fadeDuration);
       }
 
       setTimeout(() => {
-        if (sourceNode) {
-          try { sourceNode.stop(); } catch (e) {}
-          sourceNode.disconnect();
-          sourceNode = null;
+        // Stop Soundscape
+        if (soundscapeSource) {
+          try { soundscapeSource.stop(); } catch (e) {}
+          soundscapeSource.disconnect();
+          soundscapeSource = null;
         }
+
+        // Stop Binaural Oscillators
+        if (neuralOscLeft) {
+          try { neuralOscLeft.stop(); } catch (e) {}
+          neuralOscLeft.disconnect();
+          neuralOscLeft = null;
+        }
+        if (neuralOscRight) {
+          try { neuralOscRight.stop(); } catch (e) {}
+          neuralOscRight.disconnect();
+          neuralOscRight = null;
+        }
+
         isPlaying = false;
 
         document.getElementById('led-indicator').className = 'w-2.5 h-2.5 rounded-full bg-slate-300';
+        document.getElementById('neural-led').className = 'w-2.5 h-2.5 rounded-full bg-slate-300';
         document.getElementById('engine-status').textContent = 'AUDIO_ENGINE: STANDBY';
         document.getElementById('btn-master-power').classList.remove('ring-4', 'ring-[#C97A3E]/30');
         document.getElementById('label-power').textContent = 'START';
@@ -561,65 +850,247 @@
       }, fadeDuration * 1000);
     }
 
-    function restartAudioStream() {
-      if (sourceNode) {
-        try { sourceNode.stop(); } catch (e) {}
-        sourceNode.disconnect();
+    // CHANNEL 1: SOUNDSCAPE STREAM CONTROLLER
+    function startSoundscapeStream(type) {
+      if (soundscapeSource) {
+        try { soundscapeSource.stop(); } catch (e) {}
+        soundscapeSource.disconnect();
+        soundscapeSource = null;
       }
-      startAudioStream();
+
+      const buffer = getOrSynthesizeSoundscapeBuffer(type);
+      soundscapeSource = audioCtx.createBufferSource();
+      soundscapeSource.buffer = buffer;
+      soundscapeSource.loop = true;
+      soundscapeSource.connect(soundscapeGainNode);
+      soundscapeSource.start(0);
     }
 
-    // PROCEDURAL ALGORITHMIC DSP SYNTHESIS
-    function createProceduralBuffer(type) {
-      const bufferSize = audioCtx.sampleRate * 5; // 5-second seamless buffer
-      const buffer = audioCtx.createBuffer(2, bufferSize, audioCtx.sampleRate);
+    function switchSoundscapeStream() {
+      if (!isPlaying || !audioCtx) return;
+      // Cross-fade to prevent clicks
+      soundscapeGainNode.gain.setTargetAtTime(0.001, audioCtx.currentTime, 0.1);
+      setTimeout(() => {
+        startSoundscapeStream(currentSoundscape);
+        soundscapeGainNode.gain.setTargetAtTime(soundscapeVolume, audioCtx.currentTime, 0.15);
+      }, 120);
+    }
+
+    // CHANNEL 2: BRAIN.FM BINAURAL DSP ENGINE
+    function setupBinauralDSPBus() {
+      const cfg = BINAURAL_CONFIGS[currentNeuralPreset] || BINAURAL_CONFIGS.alpha;
+
+      // Create Left and Right Oscillators
+      neuralOscLeft = audioCtx.createOscillator();
+      neuralOscLeft.type = 'sine';
+      neuralOscLeft.frequency.setValueAtTime(cfg.fLeft, audioCtx.currentTime);
+
+      neuralOscRight = audioCtx.createOscillator();
+      neuralOscRight.type = 'sine';
+      neuralOscRight.frequency.setValueAtTime(cfg.fRight, audioCtx.currentTime);
+
+      neuralGainLeft = audioCtx.createGain();
+      neuralGainLeft.gain.setValueAtTime(0.5, audioCtx.currentTime);
+
+      neuralGainRight = audioCtx.createGain();
+      neuralGainRight.gain.setValueAtTime(0.5, audioCtx.currentTime);
+
+      // ChannelMerger(2): Left -> Ch 0, Right -> Ch 1
+      neuralMerger = audioCtx.createChannelMerger(2);
+      neuralOscLeft.connect(neuralGainLeft);
+      neuralGainLeft.connect(neuralMerger, 0, 0);
+
+      neuralOscRight.connect(neuralGainRight);
+      neuralGainRight.connect(neuralMerger, 0, 1);
+
+      // Depth gain connected to masterFilter
+      neuralDepthGain = audioCtx.createGain();
+      const initialDepth = isNeuralActive ? neuralDepth : 0.0001;
+      neuralDepthGain.gain.setValueAtTime(initialDepth, audioCtx.currentTime);
+
+      neuralMerger.connect(neuralDepthGain);
+      neuralDepthGain.connect(masterFilter);
+
+      neuralOscLeft.start(0);
+      neuralOscRight.start(0);
+
+      document.getElementById('carrier-readout').textContent = cfg.carrierText;
+    }
+
+    function applyBinauralPreset(presetKey) {
+      const cfg = BINAURAL_CONFIGS[presetKey];
+      if (!cfg) return;
+
+      document.getElementById('carrier-readout').textContent = cfg.carrierText;
+
+      if (isPlaying && neuralOscLeft && neuralOscRight && audioCtx) {
+        neuralOscLeft.frequency.linearRampToValueAtTime(cfg.fLeft, audioCtx.currentTime + 0.4);
+        neuralOscRight.frequency.linearRampToValueAtTime(cfg.fRight, audioCtx.currentTime + 0.4);
+        document.getElementById('engine-status').textContent = `AUDIO_ENGINE: RUNNING // ${currentSoundscape.toUpperCase()} + ${presetKey.toUpperCase()}`;
+      }
+    }
+
+    // PROCEDURAL BUFFER SYNTHESIS FOR ALL 4 SOUNDSCAPES
+    function getOrSynthesizeSoundscapeBuffer(type) {
+      if (soundscapeBufferCache[type]) {
+        return soundscapeBufferCache[type];
+      }
+
+      const sampleRate = audioCtx.sampleRate;
+      const duration = 8.0; // 8-second seamless looping buffer
+      const totalSamples = Math.floor(sampleRate * duration);
+      const buffer = audioCtx.createBuffer(2, totalSamples, sampleRate);
       const left = buffer.getChannelData(0);
       const right = buffer.getChannelData(1);
 
-      for (let channel = 0; channel < 2; channel++) {
-        const out = channel === 0 ? left : right;
+      if (type === 'lofi') {
+        // 1. Lo-Fi Study Beats: Warm electric piano chords + gentle sidechain pump
+        const chords = [
+          [146.83, 174.61, 220.00, 261.63, 329.63], // Dm9
+          [98.00, 174.61, 246.94, 329.63, 440.00],  // G13
+          [130.81, 164.81, 196.00, 246.94, 293.66], // Cmaj9
+          [110.00, 164.81, 196.00, 261.63, 329.63]  // Am7
+        ];
+        const samplesPerChord = Math.floor(totalSamples / chords.length);
 
-        if (type === 'brown') {
-          // Brownian Noise: First-order leaky integrator on Gaussian noise
-          let lastOut = 0.0;
-          for (let i = 0; i < bufferSize; i++) {
-            const white = Math.random() * 2 - 1;
-            lastOut = (lastOut + 0.02 * white) / 1.02;
-            out[i] = lastOut * 3.5;
-          }
-        } else if (type === 'pink') {
-          // Paul Kellet's filtered pink noise algorithm (3-pole)
-          let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-          for (let i = 0; i < bufferSize; i++) {
-            const white = Math.random() * 2 - 1;
-            b0 = 0.99886 * b0 + white * 0.0555179;
-            b1 = 0.99332 * b1 + white * 0.0750759;
-            b2 = 0.96900 * b2 + white * 0.1538520;
-            b3 = 0.86650 * b3 + white * 0.3104856;
-            b4 = 0.55000 * b4 + white * 0.5329522;
-            b5 = -0.7616 * b5 - white * 0.0168980;
-            out[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
-            b6 = white * 0.115926;
-          }
-        } else if (type === 'rain') {
-          // Procedural Rain: Background pink rumble + Poisson impulse droplets
-          let b0 = 0, b1 = 0, b2 = 0;
-          for (let i = 0; i < bufferSize; i++) {
-            const white = Math.random() * 2 - 1;
-            b0 = 0.99765 * b0 + white * 0.0990460;
-            b1 = 0.96300 * b1 + white * 0.2965164;
-            b2 = 0.57000 * b2 + white * 1.0526913;
-            let sample = (b0 + b1 + b2 + white * 0.1848) * 0.04;
+        for (let cIdx = 0; cIdx < chords.length; cIdx++) {
+          const chord = chords[cIdx];
+          const cStart = cIdx * samplesPerChord;
 
-            // Randomized droplet impulses
-            if (Math.random() < 0.0006) {
-              const dropAmp = (Math.random() * 0.4 + 0.2);
-              sample += dropAmp * (Math.random() * 2 - 1);
+          for (let i = 0; i < samplesPerChord; i++) {
+            const idx = cStart + i;
+            const t = i / sampleRate;
+
+            // Attack & decay envelope
+            const env = Math.exp(-t * 0.75) * Math.min(1.0, t * 45.0);
+            
+            // Sidechain pumping modulation (every 1 second)
+            const beatT = (idx / sampleRate) % 1.0;
+            const pump = 0.65 + 0.35 * Math.sin(beatT * Math.PI);
+
+            let sample = 0.0;
+            for (let f of chord) {
+              sample += Math.sin(2 * Math.PI * f * (idx / sampleRate)) * 0.16;
+              sample += Math.sin(4 * Math.PI * f * (idx / sampleRate)) * 0.04; // 2nd harmonic warmth
             }
-            out[i] = sample;
+
+            // Analog tape saturation
+            sample = Math.tanh(sample * env * pump) * 0.42;
+
+            left[idx] = sample;
+            right[idx] = sample * 0.94; // subtle stereo width
           }
         }
+      } else if (type === 'rain') {
+        // 2. Deep Midnight Rain: Filtered rain curtain + droplet impulses + rolling thunder
+        let b0_l = 0, b1_l = 0;
+        let b0_r = 0, b1_r = 0;
+
+        for (let i = 0; i < totalSamples; i++) {
+          const t = i / sampleRate;
+
+          // Pink rain curtain
+          const w_l = Math.random() * 2 - 1;
+          const w_r = Math.random() * 2 - 1;
+          b0_l = 0.997 * b0_l + w_l * 0.08;
+          b1_l = 0.96 * b1_l + w_l * 0.25;
+          let rain_l = (b0_l + b1_l + w_l * 0.1) * 0.05;
+
+          b0_r = 0.997 * b0_r + w_r * 0.08;
+          b1_r = 0.96 * b1_r + w_r * 0.25;
+          let rain_r = (b0_r + b1_r + w_r * 0.1) * 0.05;
+
+          // Droplets
+          if (Math.random() < 0.0014) {
+            const drop = (Math.random() * 0.35 + 0.15) * (Math.random() * 2 - 1);
+            rain_l += drop;
+            rain_r += drop * 0.85;
+          }
+
+          // Distant rolling thunder at t ~ 2.0s and t ~ 6.0s
+          for (let thunderT of [2.0, 6.0]) {
+            const dt = t - thunderT;
+            if (dt > 0 && dt < 2.5) {
+              const thunderEnv = Math.pow(Math.sin(dt / 2.5 * Math.PI), 2);
+              const thunderWave = Math.sin(2 * Math.PI * 48.0 * t + Math.sin(2 * Math.PI * 12.0 * t)) * 0.26;
+              rain_l += thunderWave * thunderEnv * 0.65;
+              rain_r += thunderWave * thunderEnv * 0.85;
+            }
+          }
+
+          left[i] = rain_l;
+          right[i] = rain_r;
+        }
+      } else if (type === 'vinyl') {
+        // 3. Analog Vinyl & Tape Wear: 33.3 RPM groove hum + stochastic dust clicks + wow/flutter
+        for (let i = 0; i < totalSamples; i++) {
+          const t = i / sampleRate;
+
+          // Turntable groove hum (50 Hz + 100 Hz harmonic)
+          const hum = (Math.sin(2 * Math.PI * 50.0 * t) * 0.03 + Math.sin(2 * Math.PI * 100.0 * t) * 0.015);
+
+          // Subtle tape wow & flutter (0.3 Hz pitch drift)
+          const flutter = Math.sin(2 * Math.PI * 0.3 * t) * 0.02;
+
+          let crackle_l = (Math.random() * 2 - 1) * 0.012;
+          let crackle_r = (Math.random() * 2 - 1) * 0.012;
+
+          // Micro dust pops (Dirac-like spikes with quick decay)
+          if (Math.random() < 0.0008) {
+            const pop = (Math.random() * 0.45 + 0.2) * (Math.random() * 2 - 1);
+            crackle_l += pop;
+            crackle_r += pop * (Math.random() * 0.6 + 0.4);
+          }
+
+          left[i] = hum + flutter + crackle_l;
+          right[i] = hum + flutter * 0.9 + crackle_r;
+        }
+      } else if (type === 'drone') {
+        // 4. Cosmic Space Drone: 432 Hz Pythagorean master tuning with detuned supersaw voices & resonant sweeps
+        const baseFreq = 432.0;
+        const subFreq = 216.0;
+        const lowFreq = 108.0;
+
+        for (let i = 0; i < totalSamples; i++) {
+          const t = i / sampleRate;
+
+          // Slow resonant sweep (0.08 Hz)
+          const sweep = 0.5 + 0.5 * Math.sin(2 * Math.PI * 0.08 * t);
+
+          let s_l = 0.0;
+          let s_r = 0.0;
+
+          // 5 Detuned voices for warm cinematic pad
+          const detunes = [-1.5, -0.6, 0.0, 0.8, 1.7];
+          for (let d of detunes) {
+            const f = baseFreq + d;
+            s_l += Math.sin(2 * Math.PI * f * t) * 0.06;
+            s_r += Math.sin(2 * Math.PI * (f + 0.2) * t) * 0.06;
+          }
+
+          // Sub-bass anchor
+          s_l += Math.sin(2 * Math.PI * subFreq * t) * 0.12 + Math.sin(2 * Math.PI * lowFreq * t) * 0.08;
+          s_r += Math.sin(2 * Math.PI * subFreq * t) * 0.12 + Math.sin(2 * Math.PI * lowFreq * t) * 0.08;
+
+          s_l *= (0.7 + 0.3 * sweep);
+          s_r *= (0.7 + 0.3 * (1 - sweep));
+
+          left[i] = Math.tanh(s_l) * 0.45;
+          right[i] = Math.tanh(s_r) * 0.45;
+        }
       }
+
+      // Smooth cross-fade at buffer boundaries (50ms) to ensure zero click/pop gaps
+      const fadeSamples = Math.floor(sampleRate * 0.05);
+      for (let j = 0; j < fadeSamples; j++) {
+        const factor = j / fadeSamples;
+        left[j] *= factor;
+        right[j] *= factor;
+        left[totalSamples - 1 - j] *= factor;
+        right[totalSamples - 1 - j] *= factor;
+      }
+
+      soundscapeBufferCache[type] = buffer;
       return buffer;
     }
 
@@ -633,16 +1104,51 @@
           return;
         }
         const bars = 10;
-        const levelL = Math.floor(currentVolume * bars * (0.8 + Math.random() * 0.4));
-        const levelR = Math.floor(currentVolume * bars * (0.8 + Math.random() * 0.4));
+        const totalGain = masterVolume * (isNeuralActive ? 1.0 : 0.85);
+        const levelL = Math.floor(totalGain * bars * (0.8 + Math.random() * 0.35));
+        const levelR = Math.floor(totalGain * bars * (0.8 + Math.random() * 0.35));
 
         document.getElementById('vu-left').textContent = `L: [${'█'.repeat(Math.min(bars, levelL))}${'░'.repeat(Math.max(0, bars - levelL))}]`;
         document.getElementById('vu-right').textContent = `R: [${'█'.repeat(Math.min(bars, levelR))}${'░'.repeat(Math.max(0, bars - levelR))}]`;
       }, 120);
     }
 
-    // TIMER LOGIC
-    function setTimer(mins) {
+    // BINAURAL WAVEFORM MONITOR ANIMATION
+    function startWaveformCanvasAnimation() {
+      const canvas = document.getElementById('binaural-wave-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let phase = 0;
+
+      function draw() {
+        requestAnimationFrame(draw);
+        const W = canvas.width;
+        const H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.strokeStyle = isNeuralActive ? '#C97A3E' : '#D8D4CC';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+
+        const cfg = BINAURAL_CONFIGS[currentNeuralPreset] || BINAURAL_CONFIGS.alpha;
+        const beatRate = cfg.beat; // 10, 18, 6 Hz
+        const speed = isPlaying && isNeuralActive ? beatRate * 0.05 : 0.02;
+
+        for (let x = 0; x < W; x++) {
+          const envelope = Math.sin((x / W) * Math.PI); // tapering edges
+          const y = (H / 2) + Math.sin((x * 0.15) + phase) * (H * 0.35) * envelope;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        phase += speed;
+      }
+      draw();
+    }
+
+    // POMODORO TIMER LOGIC
+    function setTimerSession(mins) {
       timerDurationMins = mins;
       timerRemainingSecs = mins * 60;
       clearInterval(timerInterval);
@@ -668,15 +1174,15 @@
         timerRemainingSecs--;
         updateTimerDisplay();
 
-        // 10-second gentle fade-out
-        if (timerRemainingSecs === 10 && gainNode && audioCtx) {
-          gainNode.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 8);
+        // 10-second gentle exponential fade-out
+        if (timerRemainingSecs === 10 && masterGain && audioCtx) {
+          masterGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 8);
         }
 
         if (timerRemainingSecs <= 0) {
           clearInterval(timerInterval);
           timerInterval = null;
-          stopAudioStream(1.0);
+          stopMultiBusAudioEngine(1.0);
           document.getElementById('timer-active-banner').classList.add('hidden');
         }
       }, 1000);
