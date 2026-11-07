@@ -531,7 +531,7 @@
         <span class="w-2.5 h-2.5 rounded-full bg-[#1A362B]"></span>
         <span class="serif font-bold text-[#111110]">GreenTools.dev</span>
         <span>&bull;</span>
-        <span>Procedural Focus Engine (100% Client-Side Multi-Bus DSP)</span>
+        <span>Hybrid Studio Focus Engine (CC0 Acoustic Stems + Real-Time Binaural DSP)</span>
       </div>
       <div>
         <a href="https://launchist.store" target="_blank" class="hover:text-black font-semibold transition">Handcrafted for Intentional Systems &rarr;</a>
@@ -785,6 +785,7 @@
       soundscapeGainNode.connect(masterFilter);
 
       startSoundscapeStream(currentSoundscape);
+      preloadAllStems();
 
       // 3. Setup Channel 2: Brain.fm Binaural Neural Modulation Bus
       setupBinauralDSPBus();
@@ -850,15 +851,89 @@
       }, fadeDuration * 1000);
     }
 
-    // CHANNEL 1: SOUNDSCAPE STREAM CONTROLLER
-    function startSoundscapeStream(type) {
+    // CHANNEL 1: SOUNDSCAPE STREAM CONTROLLER (Real Audio Stems Engine)
+    const AUDIO_STEM_PATHS = {
+      lofi: 'audio/lofi-study.mp3',
+      rain: 'audio/deep-rain.mp3',
+      vinyl: 'audio/vinyl-tape.mp3',
+      drone: 'audio/cosmic-drone.mp3'
+    };
+
+    // Guarantee zero click / pop gaps by conditioning loop boundaries in memory
+    function conditionSeamlessLoopBuffer(audioBuffer) {
+      const numChannels = audioBuffer.numberOfChannels;
+      const length = audioBuffer.length;
+      const sampleRate = audioBuffer.sampleRate;
+      
+      // 50ms equal-power crossfade between tail and head
+      const xfadeSamples = Math.min(Math.floor(sampleRate * 0.05), Math.floor(length * 0.1));
+      if (xfadeSamples <= 0) return audioBuffer;
+
+      for (let c = 0; c < numChannels; c++) {
+        const data = audioBuffer.getChannelData(c);
+        for (let i = 0; i < xfadeSamples; i++) {
+          const t = i / xfadeSamples;
+          const fadeIn = Math.sin(0.5 * Math.PI * t);
+          const fadeOut = Math.cos(0.5 * Math.PI * t);
+          
+          const headSample = data[i];
+          const tailSample = data[length - xfadeSamples + i];
+          
+          const blended = (headSample * fadeIn) + (tailSample * fadeOut);
+          data[i] = blended;
+          data[length - xfadeSamples + i] = blended;
+        }
+        data[0] = 0;
+        data[length - 1] = 0;
+      }
+      return audioBuffer;
+    }
+
+    async function loadAudioStem(type) {
+      if (soundscapeBufferCache[type]) {
+        return soundscapeBufferCache[type];
+      }
+      const url = AUDIO_STEM_PATHS[type];
+      if (!url) return null;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} loading stem: ${url}`);
+        }
+        const arrayBuffer = await response.arrayBuffer();
+        const rawBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+        const conditioned = conditionSeamlessLoopBuffer(rawBuffer);
+        soundscapeBufferCache[type] = conditioned;
+        return conditioned;
+      } catch (err) {
+        console.warn(`[Studio Engine] Falling back to procedural buffer for ${type}:`, err);
+        const synthBuffer = getOrSynthesizeSoundscapeBuffer(type);
+        soundscapeBufferCache[type] = synthBuffer;
+        return synthBuffer;
+      }
+    }
+
+    function preloadAllStems() {
+      if (!audioCtx) return;
+      Object.keys(AUDIO_STEM_PATHS).forEach(type => {
+        if (!soundscapeBufferCache[type]) {
+          loadAudioStem(type).catch(() => {});
+        }
+      });
+    }
+
+    async function startSoundscapeStream(type) {
       if (soundscapeSource) {
         try { soundscapeSource.stop(); } catch (e) {}
         soundscapeSource.disconnect();
         soundscapeSource = null;
       }
 
-      const buffer = getOrSynthesizeSoundscapeBuffer(type);
+      const buffer = await loadAudioStem(type);
+      if (!buffer || !isPlaying || !audioCtx) return;
+      if (currentSoundscape !== type) return;
+
       soundscapeSource = audioCtx.createBufferSource();
       soundscapeSource.buffer = buffer;
       soundscapeSource.loop = true;
@@ -866,12 +941,12 @@
       soundscapeSource.start(0);
     }
 
-    function switchSoundscapeStream() {
+    async function switchSoundscapeStream() {
       if (!isPlaying || !audioCtx) return;
       // Cross-fade to prevent clicks
       soundscapeGainNode.gain.setTargetAtTime(0.001, audioCtx.currentTime, 0.1);
-      setTimeout(() => {
-        startSoundscapeStream(currentSoundscape);
+      setTimeout(async () => {
+        await startSoundscapeStream(currentSoundscape);
         soundscapeGainNode.gain.setTargetAtTime(soundscapeVolume, audioCtx.currentTime, 0.15);
       }, 120);
     }
